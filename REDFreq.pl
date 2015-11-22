@@ -142,7 +142,7 @@ for(my $i=0; $i <= $bmax; $i+=$bin_size){
 }
 
 my $enz = join(".", @enz);
-open my $OUT, ">", "$genome_file" . ".$enz" . "\_freqs.txt";
+open my $OUT, ">", "$genome_file" . ".$enz" . ".$bin_size\_freqs.txt";
 for my $freqs (sort {$a<=>$b} keys %frequencies){
 	print $OUT "$freqs\t$frequencies{$freqs}\n";
 }
