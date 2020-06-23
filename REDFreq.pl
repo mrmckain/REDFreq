@@ -111,6 +111,14 @@ for my $idz (sort keys %positions){
 	$prev=-1;
 	for my $val (sort {$a<=>$b} keys %{$positions{$idz}}){
 		#print "val is $val\n";
+		if(scalar keys %enzymes == 1){
+			 my $diff = $val-$prev;
+                #       print "$diff\n";
+                        push(@cutsizes, $diff);
+                        $prev=$val;
+                        $prev_enzyme=$positions{$idz}{$val};
+                }
+		else{
 		if($prev >= 0 && $prev_enzyme ne $positions{$idz}{$val}){
 			my $diff = $val-$prev;
 		#	print "$diff\n";
@@ -121,7 +129,7 @@ for my $idz (sort keys %positions){
 		else{
 			$prev=$val;
 			$prev_enzyme=$positions{$idz}{$val};
-		}
+		}}
 	}
 }
 
@@ -145,6 +153,13 @@ my $enz = join(".", @enz);
 open my $OUT, ">", "$genome_file" . ".$enz" . ".$bin_size\_freqs.txt";
 for my $freqs (sort {$a<=>$b} keys %frequencies){
 	print $OUT "$freqs\t$frequencies{$freqs}\n";
+}
+close $OUT;
+
+open my $OUT2, ">", "$genome_file" . ".$enz" . "_Summary.txt";
+for my $ids (sort keys %positions){
+	my $count = scalar keys %{$positions{$ids}};
+	print $OUT2 "$ids\t$count\n";
 }
 
 ###########################
